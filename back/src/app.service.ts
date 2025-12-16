@@ -98,6 +98,15 @@ export class AppService {
         if (!serialNumber || !status || !salesStatus || typeof price !== "number") {
             throw new BadRequestException("missing required fields for instance");
         }
+
+        const inst = await this.cardInstanceModel.create({
+            cardId,
+            serialNumber,
+            status,
+            salesStatus,
+            price,
+        } as any);
+        return inst;
     }
 
     async updateInstance(instanceId: number, body: any) {

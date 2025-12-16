@@ -13,53 +13,57 @@ import { AppService } from './app.service';
 
 @Controller()
 export class AppController {
-    constructor(private readonly appService: AppService) {}
-    
-    @Get("/") 
-    @Render("index.njk")
-    
+  constructor(private readonly appService: AppService) {}
 
-    @Get("api/cards") 
-    listCards() {
-        return this.appService.listCards();
-    }
+  @Get('/')
+  @Render('index.njk')
+  root() {
+    return {};
+  }
 
-    @Post("api/cards")
-    createCard(@Body() body: any, @Query("count") count?: string) {
-        const n = count ? Number(count) : 100;
-        return this.appService.createCardWithInstances(body, n);
-    }
+  @Get('api/cards')
+  listCards() {
+    return this.appService.listCards();
+  }
 
-    @Put("api/cards/:id")
-    updateCard(@Param("id") id: string, @Body() body: any) {
-        return this.appService.updateCard(Number(id), body);
-    }
+  @Get('api/cards/:id')
+  getCard(@Param('id') id: string) {
+    return this.appService.getCard(Number(id));
+  }
 
-  
-    @Delete("api/cards/:id")
-    deleteCard(@Param("id") id: string) {
-        return this.appService.deleteCard(Number(id));
-    }
+  @Post('api/cards')
+  createCard(@Body() body: any, @Query('count') count?: string) {
+    const n = count ? Number(count) : 100;
+    return this.appService.createCardWithInstances(body, n);
+  }
 
-    @Get("api/cards/:id/instances")
-    listInstances(@Param("id") id: string) {
-        return this.appService.listInstances(Number(id));
-    }
+  @Put('api/cards/:id')
+  updateCard(@Param('id') id: string, @Body() body: any) {
+    return this.appService.updateCard(Number(id), body);
+  }
 
-   
-    @Post("api/cards/:id/instances")
-    createInstance(@Param("id") id: string, @Body() body: any) {
-        return this.appService.createInstance(Number(id), body);
-    }
+  @Delete('api/cards/:id')
+  deleteCard(@Param('id') id: string) {
+    return this.appService.deleteCard(Number(id));
+  }
 
-    
-    @Put("api/instances/:instanceId")
-    updateInstance(@Param("instanceId") instanceId: string, @Body() body: any) {
-        return this.appService.updateInstance(Number(instanceId), body);
-    }
+  @Get('api/cards/:id/instances')
+  listInstances(@Param('id') id: string) {
+    return this.appService.listInstances(Number(id));
+  }
 
-    @Delete("api/instances/:instanceId")
-    deleteInstance(@Param("instanceId") instanceId: string) {
-        return this.appService.deleteInstance(Number(instanceId));
-    }
+  @Post('api/cards/:id/instances')
+  createInstance(@Param('id') id: string, @Body() body: any) {
+    return this.appService.createInstance(Number(id), body);
+  }
+
+  @Put('api/instances/:instanceId')
+  updateInstance(@Param('instanceId') instanceId: string, @Body() body: any) {
+    return this.appService.updateInstance(Number(instanceId), body);
+  }
+
+  @Delete('api/instances/:instanceId')
+  deleteInstance(@Param('instanceId') instanceId: string) {
+    return this.appService.deleteInstance(Number(instanceId));
+  }
 }
